@@ -259,7 +259,7 @@ python Main.py
 ## 👤 سازنده
 
 **@GreatSaadi**
-«اگر از این پروژه خوشتون اومد، با یک استار ⭐حمایتش کنید! اگر باگی دیدید یا پیشنهادی برای بهتر شدن پروژه دارید، حتماً با من در میون بگذارید. 🤠»
+"Enjoying this project? Give it a star! ⭐ If you spot any bugs or have any feedback, I’d love to hear from you. 🤠"  
 ---
 
 <div align="center">
