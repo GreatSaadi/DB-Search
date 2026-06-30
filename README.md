@@ -18,7 +18,6 @@
 <p align="center">
   <img src="screenshot.png" alt="DB Searcher Screenshot" width="800">
   <br>
-  <em>Replace <code>screenshot.png</code> with a real screenshot of the app running in your terminal.</em>
 </p>
 
 ---
