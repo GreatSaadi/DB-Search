@@ -39,6 +39,8 @@ It combines a **dual-engine search system**, **multi-threaded parallel processin
 
 ## 🚀 Key Features
 
+- **📦 Zero-setup launch** — on startup the app checks for every required package and, if any is missing, installs it automatically via `pip` and restarts itself. No manual `pip install` needed for a fresh machine (skipped automatically when running as a packaged `.exe`, since everything is already bundled).
+- **🖥️ Standalone `.exe` ready** — can be packaged as a single-file Windows executable, so the end user doesn't need Python installed at all.
 - **🔎 Universal Search** — search a keyword across `.csv`, `.txt`, `.xlsx`, `.json`, `.db`, and `.sqlite` files at once.
 - **⚡ Dual Search Engines**
   - **Fast Engine** — a lightweight line-by-line reader for `.csv` / `.txt` files (no pandas overhead, lowest memory, highest speed).
@@ -48,6 +50,7 @@ It combines a **dual-engine search system**, **multi-threaded parallel processin
 - **🧠 In-memory cache** — keeps recently used dataframes in RAM during a session for even faster repeat searches.
 - **🔤 Persian / Arabic Text Normalization** — automatically unifies Arabic vs. Persian letter variants (ي→ی, ك→ک, etc.) and strips diacritics, so search results aren't missed due to typography differences.
 - **🈂️ RTL Display Fix** — correctly reshapes and displays right-to-left (Persian/Arabic) text in the terminal table output using `arabic_reshaper` + `python-bidi`.
+- **🚄 Cached Persian pattern matching** — for large files split into many parallel chunks, the compiled search pattern used to be rebuilt from scratch for every chunk; it's now cached per worker process, so huge files (multi-GB, hundreds of chunks) search noticeably faster on non-Latin queries.
 - **🎨 Beautiful Terminal UI** — built with [Rich](https://github.com/Textualize/rich) and [Questionary](https://github.com/tmbo/questionary): gradient ASCII logo, live system-status panel, animated progress bars, styled tables, and interactive arrow-key menus.
 - **⌨️ Live Cancel** — press `Q` or `Esc` at any time during a scan to cancel it immediately, even mid-search.
 - **📁 Recursive Directory Scan** — automatically walks through all subfolders of your target directory.
@@ -75,14 +78,18 @@ It combines a **dual-engine search system**, **multi-threaded parallel processin
 
 ## 📦 Requirements
 
-```bash
-pip install pandas rich questionary openpyxl arabic_reshaper python-bidi
-```
+**You don't need to install anything manually anymore.** The first time you run `Main.py`, it checks for every package below and installs whatever is missing automatically, then restarts itself — this happens once, silently, and only when running as a plain `.py` file (a packaged `.exe` skips this entirely since dependencies are already bundled inside it).
 
-A ready-made `requirements.txt` is included in the repo — the easiest way to install everything at once:
+If you'd rather install everything yourself ahead of time:
 
 ```bash
 pip install -r requirements.txt
+```
+
+or manually:
+
+```bash
+pip install pandas rich questionary openpyxl arabic_reshaper python-bidi
 ```
 
 | Package | Purpose |
@@ -133,7 +140,7 @@ Then just use the **arrow keys + Enter** to navigate the menu:
 
 ```
 .
-├── Main.py                 # The entire application
+├── Main.py                 # The entire application (auto-installs its own deps on first run)
 ├── requirements.txt          # Python dependencies
 ├── cli_settings.json        # Auto-generated settings file (created on first run)
 └── db_searcher_cache/        # Auto-generated cache folder (.pkl files)
@@ -146,6 +153,8 @@ Arya : "Enjoying this project? Give it a star! ⭐ If you spot any bugs or have 
 
 ---
 
+<div dir="rtl" align="right">
+
 # 🇮🇷 فارسی
 
 ## ✨ دی‌بی سرچر چیست؟
@@ -156,6 +165,8 @@ Arya : "Enjoying this project? Give it a star! ⭐ If you spot any bugs or have 
 
 ## 🚀 امکانات کلیدی
 
+- **📦 اجرا بدون نیاز به نصب دستی** — برنامه هنگام اجرا خودش بررسی می‌کند کدام کتابخانه‌ها نصب نیستند و در صورت نیاز، خودش آن‌ها را با pip نصب و برنامه را دوباره اجرا می‌کند — روی یک کامپیوتر تازه هم هیچ نصب دستی‌ای لازم نیست (این بخش وقتی برنامه به‌صورت exe پکیج شده باشد، خودکار غیرفعال می‌شود چون همه‌چیز از قبل داخلش است).
+- **🖥️ آمادگی برای تبدیل به exe** — می‌توان از برنامه یک فایل اجرایی تک‌فایلی برای ویندوز ساخت که اصلاً نیاز به نصب پایتون روی کامپیوتر مقصد ندارد.
 - **🔎 جست‌وجوی فراگیر** — جست‌وجوی یک کلیدواژه در فایل‌های `.csv`، `.txt`، `.xlsx`، `.json`، `.db` و `.sqlite` به‌طور همزمان.
 - **⚡ دو موتور جست‌وجوی مجزا**
   - **موتور سریع (Fast Engine)** — یک خوانندهٔ خطی و سبک برای فایل‌های `.csv` و `.txt` بدون نیاز به پانداز، با کمترین مصرف حافظه و بالاترین سرعت.
@@ -165,6 +176,7 @@ Arya : "Enjoying this project? Give it a star! ⭐ If you spot any bugs or have 
 - **🧠 کش داخل حافظه (RAM)** — دیتافریم‌های اخیراً استفاده‌شده را در طول یک جلسه در حافظه نگه می‌دارد تا جست‌وجوهای تکراری سریع‌تر شوند.
 - **🔤 نرمال‌سازی متن فارسی/عربی** — حروف عربی و فارسی مشابه (مثل ي→ی، ك→ک) را به‌طور خودکار یکسان‌سازی کرده و اعراب را حذف می‌کند تا نتایج به دلیل تفاوت‌های نوشتاری از قلم نیفتند.
 - **🈂️ رفع مشکل نمایش راست‌به‌چپ** — متن فارسی/عربی با استفاده از `arabic_reshaper` و `python-bidi` به‌درستی در جدول خروجی ترمینال نمایش داده می‌شود.
+- **🚄 کش کردن الگوی جست‌وجوی فارسی** — در فایل‌های بزرگ که به چند تکه‌ی موازی تقسیم می‌شوند، الگوی جست‌وجوی کامپایل‌شده دیگر برای هر تکه از نو ساخته نمی‌شود؛ حالا در هر پردازش یک‌بار کش می‌شود، پس فایل‌های چندگیگابایتی با صدها تکه، در جست‌وجوی عبارات غیرلاتین به‌طور محسوسی سریع‌تر اسکن می‌شوند.
 - **🎨 رابط کاربری زیبا در ترمینال** — ساخته‌شده با کتابخانه‌های [Rich](https://github.com/Textualize/rich) و [Questionary](https://github.com/tmbo/questionary): لوگوی گرادیانی، پنل وضعیت سیستم زنده، نوار پیشرفت متحرک، جداول رنگی و منوهای تعاملی با کلیدهای جهت‌نما.
 - **⌨️ لغو زندهٔ عملیات** — در هر لحظه از اسکن می‌توانید با فشردن `Q` یا `Esc` عملیات را فوراً لغو کنید.
 - **📁 اسکن بازگشتی پوشه‌ها** — به‌طور خودکار تمام زیرپوشه‌های مسیر هدف را پیمایش می‌کند.
@@ -192,14 +204,18 @@ Arya : "Enjoying this project? Give it a star! ⭐ If you spot any bugs or have 
 
 ## 📦 پیش‌نیازها
 
-```bash
-pip install pandas rich questionary openpyxl arabic_reshaper python-bidi
-```
+**دیگه لازم نیست چیزی رو دستی نصب کنی.** اولین بار که `Main.py` را اجرا می‌کنی، خودش بررسی می‌کند کدام کتابخانه‌های زیر نصب نیستند و آن‌ها را به‌طور خودکار نصب کرده و برنامه را دوباره اجرا می‌کند — این کار فقط یک‌بار و بی‌صدا انجام می‌شود و فقط وقتی برنامه به‌صورت فایل `.py` معمولی اجرا شود (نسخه‌ی exe پکیج‌شده این مرحله را کاملاً رد می‌کند چون همه‌چیز از قبل داخلش هست).
 
-یک فایل `requirements.txt` آماده هم داخل پروژه قرار داره — ساده‌ترین راه برای نصب همه‌ی کتابخانه‌ها با یک دستور:
+اگر ترجیح می‌دهی همه‌چیز را از قبل خودت نصب کنی:
 
 ```bash
 pip install -r requirements.txt
+```
+
+یا به‌صورت دستی:
+
+```bash
+pip install pandas rich questionary openpyxl arabic_reshaper python-bidi
 ```
 
 | کتابخانه | کاربرد |
@@ -250,7 +266,7 @@ python Main.py
 
 ```
 .
-├── Main.py                 # کل برنامه
+├── Main.py                 # کل برنامه (وابستگی‌های خودش را در اولین اجرا خودکار نصب می‌کند)
 ├── requirements.txt          # کتابخانه‌های مورد نیاز پایتون
 ├── cli_settings.json        # فایل تنظیمات (به‌صورت خودکار در اولین اجرا ساخته می‌شود)
 └── db_searcher_cache/        # پوشهٔ کش (فایل‌های .pkl) که به‌صورت خودکار ساخته می‌شود
@@ -259,7 +275,10 @@ python Main.py
 ## 👤 سازنده
 
 **@GreatSaadi**
-"Enjoying this project? Give it a star! ⭐ If you spot any bugs or have any feedback, I’d love to hear from you. 🤠"  
+«اگر از این پروژه خوشتون اومد، با یک ستاره (Star) ⭐ حمایتش کنید! اگر باگی دیدید یا پیشنهادی برای بهتر شدن پروژه دارید، حتماً با من در میون بگذارید. 🤠»
+
+</div>
+
 ---
 
 <div align="center">
